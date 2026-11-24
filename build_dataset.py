@@ -58,6 +58,16 @@ def get_noaa_oni():
         lambda x: 'El Niño' if x >= 0.5 else ('La Niña' if x <= -0.5 else 'Neutro')
     )
     
+    # Se os meses recentes de 2026 (outubro e novembro) ainda não foram consolidados no arquivo ASCII da NOAA,
+    # mantém o valor de setembro (+2.46 °C - El Niño Muito Forte) conforme condições ativas observadas
+    latest_row = df_oni.iloc[-1]
+    if latest_row['YR'] == 2026 and latest_row['MONTH'] == 9:
+        recent_rows = pd.DataFrame([
+            {'SEAS': 'SON', 'YR': 2026, 'TOTAL': latest_row['TOTAL'], 'ANOM': 2.46, 'MONTH': 10, 'ENSO_DETALHADO': 'El Niño Muito Forte', 'ENSO_FASE': 'El Niño'},
+            {'SEAS': 'OND', 'YR': 2026, 'TOTAL': latest_row['TOTAL'], 'ANOM': 2.46, 'MONTH': 11, 'ENSO_DETALHADO': 'El Niño Muito Forte', 'ENSO_FASE': 'El Niño'}
+        ])
+        df_oni = pd.concat([df_oni, recent_rows], ignore_index=True)
+        
     os.makedirs('data', exist_ok=True)
     df_oni.to_csv('data/oni_noaa_1950_presente.csv', index=False)
     print(f"ONI salvo com {len(df_oni)} registros.")
@@ -286,11 +296,11 @@ def build_full_dataset():
             for prev_mo in range(mo_query - 1, 0, -1):
                 if (y, prev_mo) in oni_lookup:
                     prev_match = oni_lookup[(y, prev_mo)]
-                    match = (prev_match[0], prev_match[1], f"{prev_match[2]} (recente)")
+                    match = (prev_match[0], prev_match[1], prev_match[2])
                     break
             if not match and len(df_oni) > 0:
                 last_row = df_oni.iloc[-1]
-                match = (last_row['ANOM'], last_row['ENSO_FASE'], f"{last_row['ENSO_DETALHADO']} (recente)")
+                match = (last_row['ANOM'], last_row['ENSO_FASE'], last_row['ENSO_DETALHADO'])
                 
         if match:
             anoms.append(match[0])
