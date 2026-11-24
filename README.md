@@ -1,4 +1,4 @@
-# 🌪️ Climatologia de Tornados no Brasil vs. El Niño e La Niña (1985 – Presente)
+# Climatologia de Tornados no Brasil vs. El Niño e La Niña (1985 – Presente)
 
 Projeto interativo para análise geoespacial e climatológica de tornados no Brasil correlacionados com as fases do fenômeno **ENSO (El Niño – Oscilação Sul)**.
 
@@ -6,7 +6,7 @@ Projeto interativo para análise geoespacial e climatológica de tornados no Bra
 
 ---
 
-## 📌 Por que esses dados são tão difíceis de encontrar?
+## Por que esses dados são tão difíceis de encontrar?
 
 1. **Ausência de Rede Radar Centralizada no Século XX:** Diferente dos Estados Unidos (com a rede NEXRAD e o Storm Prediction Center da NOAA), o Brasil não dispunha de cobertura contínua de radares meteorológicos doppler nas décadas de 80 e 90.
 2. **Subnotificação e Confusão Terminológica:** A grande maioria dos episódios severos foi classificada por defesas civis municipais como *"vendaval"* ou *"temporal com chuvas intensas"*, pois não havia equipes de campo sistemáticas para diferenciar microexplosões (*downbursts*) de tornados.
@@ -15,7 +15,7 @@ Projeto interativo para análise geoespacial e climatológica de tornados no Bra
 
 ---
 
-## 🚀 O que foi construído neste repositório?
+## O que foi construído neste repositório?
 
 1. **Dataset Unificado (`data/tornados_brasil_1985_presente.csv`):**
    - Mais de **660 ocorrências de tornados catalogadas no Brasil de 1985 até hoje**.
@@ -39,7 +39,7 @@ Projeto interativo para análise geoespacial e climatológica de tornados no Bra
 
 ---
 
-## 💻 Como Executar
+## Como Executar
 
 ### 1. Visualizar o Mapa HTML Diretamente
 Basta abrir o arquivo no seu navegador favorito:
