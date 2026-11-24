@@ -39,7 +39,7 @@ year_range = st.sidebar.slider(
 )
 
 # ENSO Phases
-fases_disponiveis = [f for f in df_events['enso_fase'].dropna().unique() if f != 'Indeterminado']
+fases_disponiveis = sorted([str(f) for f in df_events['enso_fase'].dropna().unique()])
 selected_fases = st.sidebar.multiselect(
     "Fase ENSO (Pacífico Equatorial):",
     options=fases_disponiveis,

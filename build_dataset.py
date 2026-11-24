@@ -205,8 +205,10 @@ def build_full_dataset():
             return ""
         # Remove parenthetical info e.g. "Campinas (bairro DIC)" -> "Campinas"
         loc = re.sub(r'\(.*?\)', '', loc_str)
-        # Split by comma or slash or hyphen if multiple
-        parts = re.split(r'[,/;\-e]', loc)
+        # Separate glued words e.g. XanxerêeXaxim -> Xanxerê e Xaxim
+        loc = re.sub(r'([a-zà-ÿ])e([A-ZÀ-Ý])', r'\1 e \2', loc)
+        # Split by comma, slash, semicolon, hyphen or isolated ' e '
+        parts = re.split(r'[,/;\-]|\s+e\s+', loc)
         return parts[0].strip()
         
     df_events['cidade_limpa'] = df_events['localidade'].apply(extract_city)
@@ -277,8 +279,19 @@ def build_full_dataset():
         y = row['ano']
         mo = row['mes']
         # If month is missing, default to middle of year or spring (SON = 10)
-        mo_query = mo if pd.notnull(mo) and 1 <= mo <= 12 else 10
+        mo_query = int(mo) if pd.notnull(mo) and 1 <= mo <= 12 else 10
         match = oni_lookup.get((y, mo_query))
+        if not match:
+            # If recent month where rolling 3-month ONI has lag, forward-fill with latest available observation of that year
+            for prev_mo in range(mo_query - 1, 0, -1):
+                if (y, prev_mo) in oni_lookup:
+                    prev_match = oni_lookup[(y, prev_mo)]
+                    match = (prev_match[0], prev_match[1], f"{prev_match[2]} (recente)")
+                    break
+            if not match and len(df_oni) > 0:
+                last_row = df_oni.iloc[-1]
+                match = (last_row['ANOM'], last_row['ENSO_FASE'], f"{last_row['ENSO_DETALHADO']} (recente)")
+                
         if match:
             anoms.append(match[0])
             fases.append(match[1])
