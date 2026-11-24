@@ -39,21 +39,46 @@ Projeto interativo para análise geoespacial e climatológica de tornados no Bra
 
 ---
 
-## Como Executar
+## 💻 Como Instalar e Executar
 
-### 1. Visualizar o Mapa HTML Diretamente
-Basta abrir o arquivo no seu navegador favorito:
+### 1. Clonar o Repositório e Criar o Ambiente Virtual
+
 ```bash
-xdg-open mapa_tornados_brasil_enso.html
+# Clone o repositório
+git clone git@github.com:felsangom/tornados-brasil.git
+cd tornados-brasil
+
+# Crie e ative um ambiente virtual (recomendado)
+python3 -m venv .venv
+source .venv/bin/activate  # No Windows: .venv\Scripts\activate
+
+# Instale as dependências
+pip install -r requirements.txt
 ```
 
 ### 2. Executar o Dashboard Streamlit
+
 ```bash
 streamlit run app.py
 ```
+O painel abrirá automaticamente no seu navegador padrão (geralmente em `http://localhost:8501`).
 
-### 3. Atualizar ou Reconstruir os Dados
-Para atualizar os índices da NOAA e recriar o dataset:
+### 3. Visualizar o Mapa HTML Diretamente
+
+Não requer servidor web ativo, basta abrir o arquivo no navegador:
+```bash
+# No Linux:
+xdg-open mapa_tornados_brasil_enso.html
+
+# No macOS:
+open mapa_tornados_brasil_enso.html
+
+# Ou simplesmente dê dois cliques no arquivo pelo gerenciador de arquivos
+```
+
+### 4. Atualizar ou Reconstruir a Base de Dados
+
+Para baixar dados atualizados do ONI da NOAA e reconstruir os datasets:
 ```bash
 python3 build_dataset.py
 python3 generate_map.py
