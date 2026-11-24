@@ -39,7 +39,7 @@ Projeto interativo para análise geoespacial e climatológica de tornados no Bra
 
 ---
 
-## 💻 Como Instalar e Executar
+## Como Instalar e Executar
 
 ### 1. Clonar o Repositório e Criar o Ambiente Virtual
 
